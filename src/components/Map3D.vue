@@ -6,7 +6,14 @@
         {{ is3D ? '2D View' : '3D View' }}
       </button>
       <button @click="resetView" class="control-btn">Reset View</button>
-      <button @click="flyToLocation" class="control-btn">Fly to Location</button>
+      <div class="location-selector">
+        <select v-model="selectedLocation" @change="flyToSelectedLocation" class="location-select">
+          <option value="">Select Airport</option>
+          <option value="heathrow">Heathrow Airport (LHR)</option>
+          <option value="riga">Riga Airport (RIX)</option>
+          <option value="dubai">Dubai Airport (DXB)</option>
+        </select>
+      </div>
     </div>
     <div class="map-info">
       <div class="info-panel">
@@ -17,6 +24,10 @@
           <li>Right-click + drag to rotate</li>
           <li>Ctrl + scroll to tilt</li>
         </ul>
+        <div class="airport-info" v-if="currentAirport">
+          <h4>{{ currentAirport.name }}</h4>
+          <p>{{ currentAirport.description }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -30,6 +41,30 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 const mapContainer = ref<HTMLElement>()
 const map = ref<maplibregl.Map>()
 const is3D = ref(false)
+const selectedLocation = ref('')
+const currentAirport = ref<{ name: string; description: string } | null>(null)
+
+// Airport locations data
+const airports = {
+  heathrow: {
+    name: 'Heathrow Airport (LHR)',
+    coordinates: [-0.4619, 51.4700] as [number, number],
+    zoom: 12,
+    description: 'London Heathrow Airport is the busiest airport in the UK and one of the world\'s major aviation hubs.'
+  },
+  riga: {
+    name: 'Riga Airport (RIX)',
+    coordinates: [23.9711, 56.9236] as [number, number],
+    zoom: 12,
+    description: 'Riga International Airport is the largest airport in the Baltic states and serves as a major hub for airBaltic.'
+  },
+  dubai: {
+    name: 'Dubai Airport (DXB)',
+    coordinates: [55.2708, 25.2532] as [number, number],
+    zoom: 12,
+    description: 'Dubai International Airport is the world\'s busiest airport by international passenger traffic.'
+  }
+}
 
 const toggle3D = () => {
   if (!map.value) return
@@ -103,15 +138,24 @@ const resetView = () => {
     duration: 2000
   })
   is3D.value = false
+  selectedLocation.value = ''
+  currentAirport.value = null
 }
 
-const flyToLocation = () => {
-  if (!map.value) return
+const flyToSelectedLocation = () => {
+  if (!map.value || !selectedLocation.value) return
   
-  // Fly to a specific location (e.g., Mount Everest)
+  const airport = airports[selectedLocation.value as keyof typeof airports]
+  if (!airport) return
+  
+  currentAirport.value = {
+    name: airport.name,
+    description: airport.description
+  }
+  
   map.value.flyTo({
-    center: [86.9250, 27.9881],
-    zoom: 10,
+    center: airport.coordinates,
+    zoom: airport.zoom,
     pitch: is3D.value ? 60 : 0,
     bearing: 0,
     duration: 3000
@@ -165,8 +209,7 @@ onMounted(() => {
     positionOptions: {
       enableHighAccuracy: true
     },
-    trackUserLocation: true,
-    showUserHeading: true
+    trackUserLocation: true
   }), 'top-right')
   
   // Add scale control
@@ -228,6 +271,35 @@ onUnmounted(() => {
   transform: translateY(0);
 }
 
+.location-selector {
+  margin-top: 5px;
+}
+
+.location-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.95);
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.location-select:hover {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.location-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
 .map-info {
   position: absolute;
   bottom: 20px;
@@ -240,7 +312,7 @@ onUnmounted(() => {
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  max-width: 250px;
+  max-width: 300px;
 }
 
 .info-panel h3 {
@@ -259,5 +331,25 @@ onUnmounted(() => {
 
 .info-panel li {
   margin-bottom: 4px;
+}
+
+.airport-info {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}
+
+.airport-info h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #333;
+  font-weight: 600;
+}
+
+.airport-info p {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.4;
 }
 </style> 

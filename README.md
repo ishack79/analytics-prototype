@@ -47,7 +47,10 @@ npm run dev
 - **Tilt**: Hold Ctrl and scroll to adjust the pitch
 - **3D Toggle**: Click the "3D View" button to enable terrain visualization
 - **Reset**: Click "Reset View" to return to the default view
-- **Fly to Location**: Click to fly to Mount Everest as an example
+- **Airport Selector**: Use the dropdown to fly to specific airports:
+  - Heathrow Airport (LHR) - London, UK
+  - Riga Airport (RIX) - Riga, Latvia
+  - Dubai Airport (DXB) - Dubai, UAE
 
 ### 3D Features
 
