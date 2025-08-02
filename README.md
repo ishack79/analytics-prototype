@@ -44,17 +44,26 @@ npm run dev
 
 ### Map Controls
 
+#### Navigation Controls
 - **Map Switcher**: Use the buttons in the top-right to switch between MapLibre GL JS and Mapbox GL JS
 - **Pan**: Click and drag to move around the map
 - **Zoom**: Use mouse wheel or pinch gestures
 - **Rotate**: Right-click and drag to rotate the view
 - **Tilt**: Hold Ctrl and scroll to adjust the pitch
+
+#### Application Controls
 - **3D Toggle**: Click the "3D View" button to enable terrain visualization
 - **Reset**: Click "Reset View" to return to the default view
 - **Airport Selector**: Use the dropdown to fly to specific airports:
   - Heathrow Airport (LHR) - London, UK
   - Riga Airport (RIX) - Riga, Latvia
   - Dubai Airport (DXB) - Dubai, UAE
+
+#### Built-in Map Controls
+- **Navigation**: Zoom in/out, rotate, and reset bearing (top-right)
+- **Fullscreen**: Toggle fullscreen mode (top-right)
+- **Geolocation**: Find your current location (top-right)
+- **Scale**: View map scale in metric units (bottom-left)
 
 ### 3D Features
 

@@ -1,6 +1,8 @@
 <template>
   <div class="map-container">
     <div ref="mapContainer" class="map"></div>
+    
+    <!-- Map Controls -->
     <div class="map-controls">
       <button @click="toggle3D" class="control-btn">
         {{ is3D ? '2D View' : '3D View' }}
@@ -15,15 +17,10 @@
         </select>
       </div>
     </div>
+    
+    <!-- Map Info -->
     <div class="map-info">
       <div class="info-panel">
-        <h3>3D Map Controls</h3>
-        <ul>
-          <li>Drag to pan</li>
-          <li>Scroll to zoom</li>
-          <li>Right-click + drag to rotate</li>
-          <li>Ctrl + scroll to tilt</li>
-        </ul>
         <div class="airport-info" v-if="currentAirport">
           <h4>{{ currentAirport.name }}</h4>
           <p>{{ currentAirport.description }}</p>
@@ -65,6 +62,8 @@ const airports = {
     description: 'Dubai International Airport is the world\'s busiest airport by international passenger traffic.'
   }
 }
+
+
 
 const toggle3D = () => {
   if (!map.value) return
@@ -238,6 +237,8 @@ onUnmounted(() => {
   height: 100%;
 }
 
+
+
 .map-controls {
   position: absolute;
   top: 20px;
@@ -246,6 +247,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  transition: all 0.3s ease;
 }
 
 .control-btn {
@@ -305,6 +307,7 @@ onUnmounted(() => {
   bottom: 20px;
   left: 20px;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .info-panel {
