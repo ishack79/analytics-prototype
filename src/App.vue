@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import Map3D from './components/Map3D.vue'
+import MapSwitcher from './components/MapSwitcher.vue'
 </script>
 
 <template>
   <div id="app">
-    <Map3D />
+    <MapSwitcher />
   </div>
 </template>
 
