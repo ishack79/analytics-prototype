@@ -17,16 +17,6 @@
         </select>
       </div>
     </div>
-    
-    <!-- Map Info -->
-    <div class="map-info">
-      <div class="info-panel">
-        <div class="airport-info" v-if="currentAirport">
-          <h4>{{ currentAirport.name }}</h4>
-          <p>{{ currentAirport.description }}</p>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -281,32 +271,6 @@ onUnmounted(() => {
   left: 20px;
   z-index: 1000;
   transition: all 0.3s ease;
-}
-
-.info-panel {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  max-width: 300px;
-}
-
-.info-panel h3 {
-  margin: 0 0 12px 0;
-  font-size: 16px;
-  color: #333;
-}
-
-.info-panel ul {
-  margin: 0;
-  padding-left: 20px;
-  font-size: 14px;
-  color: #666;
-  line-height: 1.4;
-}
-
-.info-panel li {
-  margin-bottom: 4px;
 }
 
 .airport-info {
